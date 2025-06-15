@@ -2,11 +2,11 @@ package com.To_Do_List.To_Do.List.services;
 
 import com.To_Do_List.To_Do.List.entity.ListEntity;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
-public interface to_doServices {
+public interface ListServices {
     ListEntity save(ListEntity listEntity);
     List<ListEntity> findAll();
-    ListEntity findByTime(Time doDate);
+    ListEntity findByTime(LocalTime doDate);
 }

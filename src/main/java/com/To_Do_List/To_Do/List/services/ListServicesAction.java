@@ -5,17 +5,17 @@ import com.To_Do_List.To_Do.List.repository.ListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class to_doServicesAction implements to_doServices{
+public class ListServicesAction implements ListServices {
 
-    private ListRepository listRepository;
+    private final ListRepository listRepository;
 
     @Autowired
-    public to_doServicesAction(ListRepository listRepository){
+    public ListServicesAction(ListRepository listRepository){
         this.listRepository = listRepository;
     }
 
@@ -30,7 +30,7 @@ public class to_doServicesAction implements to_doServices{
     }
 
     @Override
-    public ListEntity findByTime(Time doDate) {
+    public ListEntity findByTime(LocalTime doDate) {
         Optional<ListEntity> result =listRepository.findByDoDate(doDate);
         return result.orElseThrow(()-> new RuntimeException("NO Result: " + doDate));
     }

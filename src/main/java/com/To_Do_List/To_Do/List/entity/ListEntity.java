@@ -10,7 +10,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "todo_list") // แก้ให้ตรงกับ DDL
+@Table(name = "todo_list")
 public class ListEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "todo_seq")
@@ -18,7 +18,7 @@ public class ListEntity {
             allocationSize = 1)
     private Long id;
 
-    @Column(name = "task_name") // เปลี่ยนจาก name เพื่อหลีกเลี่ยง reserved word
+    @Column(name = "task_name")
     private String name;
 
     @Column(name = "is_eat")
@@ -30,11 +30,10 @@ public class ListEntity {
     @Column(name = "is_sleep")
     private boolean sleep;
 
-    @Column(name = "do_time") // เปลี่ยนจาก doDate เพื่อให้สื่อความหมายชัดเจน
-    @Temporal(TemporalType.TIME) // ระบุ temporal type สำหรับ Oracle
+    @Column(name = "do_time")
     private LocalTime doDate;
 
-    @Column(name = "created_date") // เปลี่ยนจาก date เพื่อหลีกเลี่ยง reserved word
+    @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp date;
 }
