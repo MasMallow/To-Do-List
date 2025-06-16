@@ -8,5 +8,7 @@ import java.util.List;
 public interface ListServices {
     ListEntity save(ListEntity listEntity);
     List<ListEntity> findAll();
-    ListEntity findByTime(LocalTime doDate);
+    List<ListEntity> findByTimeRange(LocalTime startTime, LocalTime endTime);
+    List<ListEntity> findByTimeAfter(LocalTime time);
+    List<ListEntity> findByTimeBefore(LocalTime time);
 }

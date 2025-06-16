@@ -30,8 +30,17 @@ public class ListServicesAction implements ListServices {
     }
 
     @Override
-    public ListEntity findByTime(LocalTime doDate) {
-        Optional<ListEntity> result =listRepository.findByDoDate(doDate);
-        return result.orElseThrow(()-> new RuntimeException("NO Result: " + doDate));
+    public List<ListEntity> findByTimeRange(LocalTime startTime, LocalTime endTime) {
+        return listRepository.findByDoDateBetween(startTime,endTime);
+    }
+
+    @Override
+    public List<ListEntity> findByTimeAfter(LocalTime time) {
+        return listRepository.findByDoDateAfter(time);
+    }
+
+    @Override
+    public List<ListEntity> findByTimeBefore(LocalTime time) {
+        return listRepository.findByDoDateBefore(time);
     }
 }

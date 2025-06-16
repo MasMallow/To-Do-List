@@ -49,4 +49,37 @@ public class ListController {
             return ResponseEntity.internalServerError().build();
         }
     }
+    @GetMapping("/time-range")
+    public ResponseEntity<List<ListEntity>> findByTimeRange(
+            @RequestParam String startTime,
+            @RequestParam String endTime){
+        try{
+            LocalTime start = LocalTime.parse(startTime);
+            LocalTime end = LocalTime.parse(endTime);
+            List<ListEntity> result = listServices.findByTimeRange(start,end);
+            return ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/time-after")
+    public ResponseEntity<List<ListEntity>> findByTimeAfter(@RequestParam String time){
+        try {
+            LocalTime localTime = LocalTime.parse(time);
+            List<ListEntity> result = listServices.findByTimeAfter(localTime);
+            return ResponseEntity.ok(result);
+        } catch (Exception e){
+            return  ResponseEntity.badRequest().build();
+        }
+    }
+    @GetMapping("/time-before")
+    public ResponseEntity<List<ListEntity>> findByTimeBefore(@RequestParam String time){
+        try{
+            LocalTime localTime = LocalTime.parse(time);
+            List<ListEntity> result = listServices.findByTimeBefore(localTime);
+            return  ResponseEntity.ok(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
