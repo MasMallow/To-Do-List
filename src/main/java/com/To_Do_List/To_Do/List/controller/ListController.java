@@ -9,7 +9,7 @@ import jakarta.validation.Valid;
 
 import java.sql.Timestamp;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/list")
@@ -80,6 +80,58 @@ public class ListController {
             return  ResponseEntity.ok(result);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
+        }
+    }
+    @PutMapping("/ToDo/{id}")
+    public ResponseEntity<ListEntity> updateToDo(
+            @PathVariable Long id,
+            @RequestBody Map<String, Object> updates) {
+        try {
+            Optional<ListEntity> existingEntityOpt = listServices.findById(id);
+            if (existingEntityOpt.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            ListEntity existingEntity = existingEntityOpt.get();
+
+            // อัปเดตเฉพาะฟิลด์ที่ส่งมา
+            if (updates.containsKey("name")) {
+                String name = (String) updates.get("name");
+                if (name != null && !name.trim().isEmpty()) {
+                    existingEntity.setName(name);
+                }
+            }
+            if (updates.containsKey("sleep")) {
+                existingEntity.setSleep((Boolean) updates.get("sleep"));
+            }
+            if (updates.containsKey("eat")) {
+                existingEntity.setEat((Boolean) updates.get("eat"));
+            }
+            if (updates.containsKey("exercise")) {
+                existingEntity.setExercise((Boolean) updates.get("exercise"));
+            }
+            if (updates.containsKey("doDate")) {
+                String doDateStr = (String) updates.get("doDate");
+                if (doDateStr != null) {
+                    existingEntity.setDoDate(LocalTime.parse(doDateStr));
+                }
+            }
+
+            ListEntity result = listServices.save(existingEntity);
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteToDo(@PathVariable Long id){
+        try{
+            listServices.deleteById(id);
+            return ResponseEntity.ok("Deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
         }
     }
 }

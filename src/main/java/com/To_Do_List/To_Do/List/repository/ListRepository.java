@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 public interface ListRepository extends JpaRepository<ListEntity,Long> {
+    Optional<ListEntity> findById(Long id);
     List<ListEntity> findByDoDateBetween(LocalTime startTime, LocalTime endTime);
     List<ListEntity> findByDoDateAfter(LocalTime time);
     List<ListEntity> findByDoDateBefore(LocalTime time);
